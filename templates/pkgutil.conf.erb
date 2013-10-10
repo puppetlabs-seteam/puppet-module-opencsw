@@ -1,0 +1,29 @@
+# Configuration file for pkgutil
+#
+# THIS FILE IS MANAGED BY PUPPET!
+# Any local changes made to this file may be overwritten by the configuration
+# system.
+
+# $Id: pkgutil.conf 7 2009-03-07 18:48:54Z bonivart $
+
+# Master configuration file is placed in /opt/csw/etc. Place a pkgutil.conf
+# file in /etc/opt/csw if you want a local override setting-by-setting
+
+# Nothing below is mandatory to change, pkgutil will use the default values
+# noted below for each option unless something is uncommented
+
+# Mirror to use for downloads
+# See http://www.blastwave.org/mirrors.php for alternative mirrors
+# Default: http://download.blastwave.org/csw/unstable
+mirror=<%= @mirror %>
+
+# Solaris 10 only. Comment this line to make pkgadd install packages into all zones instead of
+# Global only.
+pkgaddopts=-G
+
+# Flags for use with wget, e.g. "-nv" for less verbose or "-q" for quiet
+wgetopts=-nv
+
+# To enable use of gpg or md5, uncomment these
+use_gpg=<%= @use_gpg.to_s %>
+use_md5=<%= @use_md5.to_s %>
