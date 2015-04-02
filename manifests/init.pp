@@ -7,7 +7,20 @@ class opencsw (
   $mirror         = 'http://mirror.opencsw.org/opencsw/stable',
   $use_gpg        = false,
   $use_md5        = false,
+  $http_proxy     = undef,
+  $https_proxy    = undef,
 ) {
+
+  # When retrieving pkgutil using a proxy, staging::file requires environment
+  # variables be passed in. Similarly, the pkgutil.conf file will require
+  # wgetopts be specified to use the proxy.
+  if $http_proxy or $https_proxy {
+    $environment = ["http_proxy=${http_proxy}", "https_proxy=${https_proxy}"]
+    $wgetopts    = "-nv --execute 'http_proxy=${http_proxy}' 'https_proxy=${https_proxy}'"
+  } else {
+    $environment = undef
+    $wgetopts    = '-nv'
+  }
 
   File {
     owner => 'root',
@@ -16,9 +29,10 @@ class opencsw (
   }
 
   staging::file { 'CSWpkgutil.pkg':
-    target => '/var/sadm/pkg/CSWpkgutil.pkg',
-    source => $package_source,
-    before => Package['CSWpkgutil'],
+    target      => '/var/sadm/pkg/CSWpkgutil.pkg',
+    source      => $package_source,
+    before      => Package['CSWpkgutil'],
+    environment => $environment,
   }
 
   file { '/var/sadm/install/admin/opencsw-noask':
@@ -38,6 +52,7 @@ class opencsw (
   #   - $mirror
   #   - $use_gpg
   #   - $use_md5
+  #   - $wgetopts
   file { '/etc/opt/csw/pkgutil.conf':
     ensure  => file,
     content => template('opencsw/pkgutil.conf.erb'),
