@@ -1,5 +1,5 @@
 name    'seteam/opencsw'
-version '0.1.0'
+version '0.2.0'
 source 'https://github.com/puppetlabs-seteam/puppet-module-opencsw'
 author 'Reid Vandewiele'
 license 'Apache License, Version 2.0'
