@@ -16,7 +16,7 @@ class opencsw (
   # wgetopts be specified to use the proxy.
   if $http_proxy or $https_proxy {
     $environment = ["http_proxy=${http_proxy}", "https_proxy=${https_proxy}"]
-    $wgetopts    = "-nv --execute 'http_proxy=${http_proxy}' 'https_proxy=${https_proxy}'"
+    $wgetopts    = "-nv --execute http_proxy=${http_proxy} https_proxy=${https_proxy}"
   } else {
     $environment = undef
     $wgetopts    = '-nv'
