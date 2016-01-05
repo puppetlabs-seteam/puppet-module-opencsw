@@ -33,6 +33,7 @@ class opencsw (
     source      => $package_source,
     before      => Package['CSWpkgutil'],
     environment => $environment,
+    wget_option => $wgetopts,
   }
 
   file { '/var/sadm/install/admin/opencsw-noask':
